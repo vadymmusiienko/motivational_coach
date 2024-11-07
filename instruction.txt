@@ -33,3 +33,5 @@ Step 12. Install bcrypt (npm install bcrypt)
 Step 13. Add "prisma": {
   "seed": "node prisma/seed.js"
 } to the package.json for seeding
+
+Step 14. Create sign in and sign out buttons (components)
