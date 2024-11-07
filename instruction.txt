@@ -1,0 +1,27 @@
+// Install auth
+npm install next-auth@beta
+
+// Create a secret for auth
+npx auth secret
+
+Step 1. Create auth.js file at root
+
+Step 2. Create /app/api/auth/[...nextauth]/route.js
+
+Step 3. Create signin component
+
+npm install zod
+Step 4. Create Zod validation ./lib/zod.js
+
+Step 5. use the zod validation in auth.js
+
+Step 6. Create a database by copying .env from vercel
+
+Step 7. install prisma (npm install prisma --save-dev)
+npm install @prisma/client @auth/prisma-adapter
+
+Step 8. Create prisma folder in the root and shcema.prisma file
+
+Step 9. Create lib/prisma.js (prisma client)
+
+Step 10. Add models to the schema and update it with (npx prisma db push)
