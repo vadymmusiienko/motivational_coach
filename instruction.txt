@@ -25,3 +25,11 @@ Step 8. Create prisma folder in the root and shcema.prisma file
 Step 9. Create lib/prisma.js (prisma client)
 
 Step 10. Add models to the schema and update it with (npx prisma db push)
+
+Step 11. Create a seed.js file
+
+Step 12. Install bcrypt (npm install bcrypt)
+
+Step 13. Add "prisma": {
+  "seed": "node prisma/seed.js"
+} to the package.json for seeding
