@@ -35,3 +35,5 @@ Step 13. Add "prisma": {
 } to the package.json for seeding
 
 Step 14. Create sign in and sign out buttons (components)
+
+Step 15. Set up middleware and callbacks in auth.js TODO: stopped here, fix Hydration error
