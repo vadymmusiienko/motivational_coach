@@ -5,10 +5,13 @@ export default async function ServerSessionTest() {
 
     if (!session?.user) return null;
 
+    const user_id = session.user.id; // This is how you get a user id from session
+
     return (
-        <div>
+        <>
             <h1>Server Session</h1>
             <div>{JSON.stringify(session)}</div>
-        </div>
+            <div>{user_id}</div>
+        </>
     );
 }
