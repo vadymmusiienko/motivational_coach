@@ -1,6 +1,6 @@
 // seed.js
 import { PrismaClient } from "@prisma/client";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
