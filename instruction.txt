@@ -43,3 +43,7 @@ Step 16. Protect all routes
 Step 17. add ("postinstall": "prisma generate") to scripts in package.json for deployment
 
 Step 18. Configure custom sign-in page (Create signin route and pages: {signin: ... } in auth as well as provider map)
+
+Step 19. Install framer motion (npm i framer-motion) and (clsx tailwind-merge @radix-ui/react-label @tabler/icons-react)
+
+Step 20. Edit tailwin.config for framer motion
