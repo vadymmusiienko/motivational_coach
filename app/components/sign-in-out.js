@@ -1,11 +1,12 @@
 import { signIn, signOut } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export function SignIn() {
     return (
         <form
             action={async () => {
                 "use server";
-                await signIn();
+                redirect("/signin");
             }}
         >
             <button type="submit">Sign in</button>

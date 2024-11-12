@@ -1,9 +1,12 @@
 import { redirect } from "next/navigation";
-import { signIn } from "@/lib/auth";
+import { signIn, auth } from "@/lib/auth";
 import Input from "./components/input";
 import { Label } from "./components/label";
 
-export default function SignUp() {
+export default async function SignUp() {
+    const session = await auth();
+    if (session?.user) redirect("/dashboard");
+
     // Handle the submission
     async function handleFormSubmit(formData) {
         "use server";
