@@ -1,35 +1,17 @@
 import { redirect } from "next/navigation";
-import { signIn, auth } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import Input from "../components/input";
 import { Label } from "../components/label";
+import { login } from "../actions";
 
-export default async function SignUp() {
+export default async function Login({ searchParams }) {
+    // The error message if any
+    const { error } = await searchParams;
+    const errorMessage = error ? decodeURIComponent(error) : null;
+
     // Only unauthorized users can log in
     const session = await auth();
     if (session?.user) redirect("/dashboard");
-
-    // Handle the submission
-    async function handleFormSubmit(formData) {
-        "use server";
-        console.log("this is formdata", formData); //TODO:
-
-        // Extract form data
-        const email = formData.get("email");
-        const password = formData.get("password");
-
-        try {
-            await signIn("credentials", {
-                redirect: false,
-                callbackUrl: "/",
-                email,
-                password,
-            });
-        } catch (error) {
-            const someError = error;
-            return someError.cause;
-        }
-        redirect("/dashboard");
-    }
 
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -42,7 +24,7 @@ export default async function SignUp() {
                     login flow yet
                 </p>
 
-                <form className="my-8" action={handleFormSubmit}>
+                <form className="my-8" action={login}>
                     <div className="mb-4">
                         <LabelInputContainer>
                             <Label htmlFor="email">Email Address</Label>
@@ -73,6 +55,9 @@ export default async function SignUp() {
                         Sign in &rarr;
                         <BottomGradient />
                     </button>
+                    <p className="text-red-500 mt-4 text-center">
+                        {errorMessage}
+                    </p>
                 </form>
             </div>
         </div>

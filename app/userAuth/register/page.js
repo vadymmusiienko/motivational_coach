@@ -1,13 +1,11 @@
 import Input from "../components/input";
 import { Label } from "../components/label";
 import Link from "next/link";
-import { auth, signIn } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
-import { hash } from "bcryptjs";
-import { signInSchema } from "@/lib/zod";
+import { register } from "../actions";
 
-export default async function SignUp({ searchParams }) {
+export default async function Register({ searchParams }) {
     // The error message if any
     const { error } = await searchParams;
     const errorMessage = error ? decodeURIComponent(error) : null;
@@ -15,88 +13,6 @@ export default async function SignUp({ searchParams }) {
     // Only unauthorized users can register
     const session = await auth();
     if (session?.user) redirect("/dashboard");
-
-    // Handle the register
-    async function handleSubmit(formData) {
-        "use server";
-        const firstName = formData.get("firstname").trim();
-        const lastName = formData.get("lastname").trim();
-        const email = formData.get("email").trim();
-        const password = formData.get("password").trim();
-        const confirmPassowrd = formData.get("confirmPassword").trim();
-
-        // Make sure all field are filled
-        if (
-            !firstName ||
-            !lastName ||
-            !email ||
-            !password ||
-            !confirmPassowrd
-        ) {
-            // Display the error message
-            redirect(
-                `/userAuth/register?error=${encodeURIComponent(
-                    "Please fill in all fields."
-                )}`
-            );
-        }
-
-        // Make sure its valid password and email
-        try {
-            await signInSchema.parseAsync({ email, password });
-        } catch (e) {
-            // Display the error message
-            redirect(
-                `/userAuth/register?error=${encodeURIComponent(
-                    "Invalid password or email format."
-                )}`
-            );
-        }
-
-        // Make sure the email is not used
-        const existingUser = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        });
-        if (existingUser) {
-            // Display the error message
-            redirect(
-                `/userAuth/register?error=${encodeURIComponent(
-                    "The user already exists!"
-                )}`
-            );
-        }
-
-        if (existingUser) {
-            throw new Error("The user already exists!");
-        }
-
-        // Hash the password
-        const hashedPassword = await hash(password, 12);
-
-        // Create a user
-        await prisma.user.create({
-            data: {
-                firstName,
-                lastName,
-                email,
-                password: hashedPassword,
-            },
-        });
-        //TODO:
-        console.log("User succefully created");
-
-        // Log the user in (create a session)
-        await signIn("credentials", {
-            redirect: false,
-            callbackurl: "/",
-            email,
-            password,
-        });
-
-        redirect("/dashboard");
-    }
 
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -109,7 +25,7 @@ export default async function SignUp({ searchParams }) {
                     login flow yet
                 </p>
 
-                <form className="my-8" action={handleSubmit}>
+                <form className="my-8" action={register}>
                     <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                         <LabelInputContainer>
                             <Label htmlFor="firstname">First name</Label>
