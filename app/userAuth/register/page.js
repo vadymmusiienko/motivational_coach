@@ -6,25 +6,19 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { signInSchema } from "@/lib/zod";
-import { cookies } from "next/headers";
 
 export default async function SignUp({ searchParams }) {
+    // The error message if any
+    const { error } = await searchParams;
+    const errorMessage = error ? decodeURIComponent(error) : null;
+
     // Only unauthorized users can register
     const session = await auth();
     if (session?.user) redirect("/dashboard");
 
-    // Access the cookies
-    const cookieStore = cookies();
-
-    // Get the error message from the cookies
-    const errorMessageCookie = cookieStore.get("errorMessage");
-    const errorMessage = errorMessageCookie ? errorMessageCookie.value : null;
-
-
     // Handle the register
     async function handleSubmit(formData) {
         "use server";
-        const cookieStore = cookies(); // Initialize the cookie store
         const firstName = formData.get("firstname").trim();
         const lastName = formData.get("lastname").trim();
         const email = formData.get("email").trim();
@@ -40,14 +34,11 @@ export default async function SignUp({ searchParams }) {
             !confirmPassowrd
         ) {
             // Display the error message
-            cookieStore.set("errorMessage", "Please fill in all fields.");
-            redirect(`/userAuth/register`);
-        }
-
-        // Ensure passwords match
-        if (password != confirmPassowrd) {
-            cookieStore.set("errorMessage", "Passwords do not match.");
-            redirect(`/userAuth/register`);
+            redirect(
+                `/userAuth/register?error=${encodeURIComponent(
+                    "Please fill in all fields."
+                )}`
+            );
         }
 
         // Make sure its valid password and email
@@ -55,11 +46,11 @@ export default async function SignUp({ searchParams }) {
             await signInSchema.parseAsync({ email, password });
         } catch (e) {
             // Display the error message
-            cookieStore.set(
-                "errorMessage",
-                "Invalid password or email format."
+            redirect(
+                `/userAuth/register?error=${encodeURIComponent(
+                    "Invalid password or email format."
+                )}`
             );
-            redirect(`/userAuth/register`);
         }
 
         // Make sure the email is not used
@@ -68,15 +59,18 @@ export default async function SignUp({ searchParams }) {
                 email,
             },
         });
-
         if (existingUser) {
-            cookieStore.set("errorMessage", "The user already exists!");
-            redirect(`/userAuth/register`);
+            // Display the error message
+            redirect(
+                `/userAuth/register?error=${encodeURIComponent(
+                    "The user already exists!"
+                )}`
+            );
         }
 
-            // If everything is okay, clear any existing error message
-    cookieStore.set("errorMessage", "", { maxAge: -1 });
-
+        if (existingUser) {
+            throw new Error("The user already exists!");
+        }
 
         // Hash the password
         const hashedPassword = await hash(password, 12);
