@@ -38,4 +38,8 @@ Step 14. Create sign in and sign out buttons (components)
 
 Step 15. Pass id to the session object through jwt (auth file)
 
-Step 15. Set up middleware and callbacks in auth.js TODO: stopped here, fix Hydration error
+Step 16. Protect all routes
+
+Step 17. add ("postinstall": "prisma generate") to scripts in package.json for deployment
+
+Step 18. Configure custom sign-in page (Create signin route and pages: {signin: ... } in auth as well as provider map)
