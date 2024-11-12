@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 import { signIn, auth } from "@/lib/auth";
-import Input from "./components/input";
-import { Label } from "./components/label";
+import Input from "../components/input";
+import { Label } from "../components/label";
 
 export default async function SignUp() {
+    // Only unauthorized users can log in
     const session = await auth();
     if (session?.user) redirect("/dashboard");
 

@@ -13,9 +13,10 @@ datasource db {
 // Auth tables 
 model User {
   id            String          @id @default(cuid())
-  name          String?
+  firstName     String?
+  lastName      String?
   email         String          @unique
-  sessions      Session[]
+  // sessions      Session[]
   password      String          //Hashed password
  
   createdAt DateTime @default(now())
@@ -23,20 +24,20 @@ model User {
 }
  
  
-model Session {
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// model Session {
+//   sessionToken String   @unique
+//   userId       String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
  
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+// model VerificationToken {
+//   identifier String
+//   token      String
+//   expires    DateTime
  
-  @@id([identifier, token])
-}
+//   @@id([identifier, token])
+// }

@@ -1,17 +1,13 @@
 import { signIn, signOut } from "@/lib/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export function SignIn() {
-    return (
-        <form
-            action={async () => {
-                "use server";
-                redirect("/signin");
-            }}
-        >
-            <button type="submit">Sign in</button>
-        </form>
-    );
+    return <Link href="/userAuth/signin">Sign In</Link>;
+}
+
+export function Register() {
+    return <Link href="/userAuth/register">Register</Link>;
 }
 
 export function SignOut() {
