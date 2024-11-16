@@ -47,3 +47,9 @@ Step 18. Configure custom sign-in page (Create signin route and pages: {signin: 
 Step 19. Install framer motion (npm i framer-motion) and (clsx tailwind-merge @radix-ui/react-label @tabler/icons-react)
 
 Step 20. Edit tailwin.config for framer motion
+
+Step 21. Add a login and register page as well as a file with functions for register and login
+
+Step 22. Add a main grid for dashboard
+
+Step 23. Add coach images to the public folder
