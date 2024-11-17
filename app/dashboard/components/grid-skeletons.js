@@ -5,12 +5,12 @@ import Image from "next/image";
 // For random width
 import { useEffect, useState } from "react";
 // Import the lmnt and ChatGPT functionalities
-import { getCoach, randomQuoteAudio, setCoach } from "@/lib/lmnt";
+import { randomQuoteAudio, setCoach } from "@/lib/lmnt";
 
 // Constants with coach voice ids
 const elonMusk = process.env.NEXT_PUBLIC_VOICE_MUSK;
 const davidGoggins = process.env.NEXT_PUBLIC_VOICE_GOGGINS;
-const tonyRobbins = process.env.NEXT_PUBLIC_VOICE_ROBBINS; //TODO: synthesize the voice
+const tonyRobbins = process.env.NEXT_PUBLIC_VOICE_ROBBINS;
 
 // Function to play a random motivational quote
 async function playAudio() {
@@ -159,38 +159,51 @@ export const SkeletonThree = () => {
     );
 };
 export const SkeletonFour = ({ currentlySelectedCoach }) => {
-    const first = {
-        initial: {
-            x: 20,
-            rotate: -5,
-        },
-        hover: {
-            x: 0,
-            rotate: 0,
-        },
-    };
-    const second = {
-        initial: {
-            x: -20,
-            rotate: 5,
-        },
-        hover: {
-            x: 0,
-            rotate: 0,
-        },
-    };
+    // const first = {
+    //     initial: {
+    //         x: 20,
+    //         rotate: -5,
+    //     },
+    //     hover: {
+    //         x: 0,
+    //         rotate: 0,
+    //     },
+    // };
+    // const second = {
+    //     initial: {
+    //         x: -20,
+    //         rotate: 5,
+    //     },
+    //     hover: {
+    //         x: 0,
+    //         rotate: 0,
+    //     },
+    // };
 
     // States for highlighting the selected coach
     const [selectedCoach, selectCoach] = useState(currentlySelectedCoach);
+    const [isLoading, setLoading] = useState(false);
 
     // Change the selected coach
     async function handleSelectCoach(voiceId) {
         //TODO: add loading state
-        // Update the database (new coachVoiceId)
-        await setCoach(voiceId);
+        // Check if already loading
+        if (isLoading) return;
+
+        // Check if already selected
+        if (selectedCoach === voiceId) return;
 
         // Update the state of the selected coach
         selectCoach(voiceId);
+
+        // Start loadging
+        setLoading(true);
+
+        // Update the database (new coachVoiceId)
+        await setCoach(voiceId);
+
+        // Stop loading
+        setLoading(false);
     }
 
     return (
@@ -202,10 +215,10 @@ export const SkeletonFour = ({ currentlySelectedCoach }) => {
         >
             {/* Elon Musk */}
             <motion.div
-                variants={first}
+                // variants={first}
                 onClick={() => handleSelectCoach(elonMusk)}
-                className={`h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
-                    selectedCoach === elonMusk ? "ring-4 ring-blue-500" : ""
+                className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                    selectedCoach === elonMusk ? "shadow-glowbottom" : ""
                 }`}
             >
                 <Image
@@ -221,12 +234,17 @@ export const SkeletonFour = ({ currentlySelectedCoach }) => {
                 <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Visionary
                 </p>
+                {isLoading && selectedCoach === elonMusk && (
+                    <div className="absolute top-44 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-white"></div>
+                    </div>
+                )}
             </motion.div>
             {/* David Goggins */}
             <motion.div
                 onClick={() => handleSelectCoach(davidGoggins)}
-                className={`h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
-                    selectedCoach === davidGoggins ? "ring-4 ring-blue-500" : ""
+                className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                    selectedCoach === davidGoggins ? "shadow-glowbottom" : ""
                 }`}
             >
                 <Image
@@ -242,13 +260,18 @@ export const SkeletonFour = ({ currentlySelectedCoach }) => {
                 <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Unbreakable
                 </p>
+                {isLoading && selectedCoach === davidGoggins && (
+                    <div className="absolute top-44 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-white"></div>
+                    </div>
+                )}
             </motion.div>
             {/* Tony Robbins */}
             <motion.div
-                variants={second}
+                // variants={second}
                 onClick={() => handleSelectCoach(tonyRobbins)}
-                className={`h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
-                    selectedCoach === tonyRobbins ? "ring-4 ring-blue-500" : ""
+                className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                    selectedCoach === tonyRobbins ? "shadow-glowbottom" : ""
                 }`}
             >
                 <Image
@@ -264,6 +287,11 @@ export const SkeletonFour = ({ currentlySelectedCoach }) => {
                 <p className="border border-orange-500 bg-orange-100 dark:bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Empowering
                 </p>
+                {isLoading && selectedCoach === tonyRobbins && (
+                    <div className="absolute top-44 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-white"></div>
+                    </div>
+                )}
             </motion.div>
         </motion.div>
     );

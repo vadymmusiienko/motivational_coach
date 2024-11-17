@@ -17,9 +17,14 @@ import {
 
 // Function to get the currently selected coach and pass it to the skeleton
 async function getVoice() {
-    const { _, voiceId } = await getCoach();
-    return voiceId;
+    try {
+        const coach = await getCoach();
+    } catch (e) {
+        return null;
+    }
+    return coach.voiceId;
 }
+
 const voice = await getVoice();
 
 export const items = [

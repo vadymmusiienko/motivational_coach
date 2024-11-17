@@ -89,7 +89,7 @@ export async function register(formData) {
             lastName,
             email,
             password: hashedPassword,
-            coachVoiceId: process.env.VOICE_GOGGINS, // Goggins voice by default
+            coachVoiceId: process.env.NEXT_PUBLIC_VOICE_GOGGINS, // Goggins voice by default
         },
     });
 

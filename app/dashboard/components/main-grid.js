@@ -7,7 +7,7 @@ import { items } from "./items";
 export default function MainGrid() {
     // Display a grid
     return (
-        <Grid className="my-10 max-w-7xl mx-auto md:auto-rows-[22rem]">
+        <Grid className="max-w-7xl mx-auto md:auto-rows-[22rem]">
             {items.map((item, i) => (
                 <GridItem
                     key={i}
