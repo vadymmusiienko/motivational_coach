@@ -165,7 +165,6 @@ export const SkeletonFour = () => {
 
     // Change the selected coach
     async function handleSelectCoach(voiceId) {
-        //TODO: add loading state
         // Check if already loading
         if (isLoading) return;
 

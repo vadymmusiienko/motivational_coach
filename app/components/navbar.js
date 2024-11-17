@@ -53,40 +53,61 @@ export default function Navbar({ isLoggedIn }) {
                     </button>
                 </div>
                 {/* Sidebar Links */}
-                <ul className="flex flex-col space-y-8 p-4">
-                    <li>
-                        <Link
-                            href="/dashboard"
-                            className="text-white hover:underline"
-                        >
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/archive"
-                            className="text-white hover:underline"
-                        >
-                            Archive
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/about"
-                            className="text-white hover:underline"
-                        >
-                            About
-                        </Link>
-                    </li>
-                    <li>
-                        <button
-                            onClick={() => logout()}
-                            className="relative text-white hover:underline"
-                        >
-                            Log Out
-                        </button>
-                    </li>
-                </ul>
+                {isLoggedIn ? (
+                    <ul className="flex flex-col space-y-8 p-4">
+                        <li>
+                            <Link
+                                href="/dashboard"
+                                className="text-white hover:underline"
+                            >
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/archive"
+                                className="text-white hover:underline"
+                            >
+                                Archive
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/about"
+                                className="text-white hover:underline"
+                            >
+                                About
+                            </Link>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => logout()}
+                                className="relative text-white hover:underline"
+                            >
+                                Log Out
+                            </button>
+                        </li>
+                    </ul>
+                ) : (
+                    <ul className="flex flex-col space-y-8 p-4">
+                        <li>
+                            <Link
+                                href="/userAuth/signin"
+                                className="relative text-white hover:underline"
+                            >
+                                Log in
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/userAuth/register"
+                                className="relative text-white hover:underline"
+                            >
+                                Sign up
+                            </Link>
+                        </li>
+                    </ul>
+                )}
             </div>
 
             {/* Horizontal Navbar */}
@@ -115,40 +136,61 @@ export default function Navbar({ isLoggedIn }) {
                 </div>
 
                 {/* Navigation Links */}
-                <ul className="hidden md:flex space-x-6">
-                    <li>
-                        <Link
-                            href="/dashboard"
-                            className="relative text-white hover:underline"
-                        >
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/archive"
-                            className="relative text-white hover:underline"
-                        >
-                            Archive
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/about"
-                            className="relative text-white hover:underline"
-                        >
-                            About
-                        </Link>
-                    </li>
-                    <li>
-                        <button
-                            onClick={() => logout()}
-                            className="relative text-white hover:underline"
-                        >
-                            Log Out
-                        </button>
-                    </li>
-                </ul>
+                {isLoggedIn ? (
+                    <ul className="hidden md:flex space-x-6">
+                        <li>
+                            <Link
+                                href="/dashboard"
+                                className="relative text-white hover:underline"
+                            >
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/archive"
+                                className="relative text-white hover:underline"
+                            >
+                                Archive
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/about"
+                                className="relative text-white hover:underline"
+                            >
+                                About
+                            </Link>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => logout()}
+                                className="relative text-white hover:underline"
+                            >
+                                Log Out
+                            </button>
+                        </li>
+                    </ul>
+                ) : (
+                    <ul className="hidden md:flex space-x-6">
+                        <li>
+                            <Link
+                                href="/userAuth/signin"
+                                className="relative text-white hover:underline"
+                            >
+                                Log in
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/userAuth/register"
+                                className="relative text-white hover:underline"
+                            >
+                                Sign up
+                            </Link>
+                        </li>
+                    </ul>
+                )}
 
                 {/* Menu Button */}
                 <button
