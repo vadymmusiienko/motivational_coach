@@ -79,14 +79,12 @@ export default function Navbar({ isLoggedIn }) {
                         </Link>
                     </li>
                     <li>
-                        <form action={async () => await logout()}>
-                            <button
-                                type="submit"
-                                className="relative text-white hover:underline"
-                            >
-                                Log out
-                            </button>
-                        </form>
+                        <button
+                            onClick={() => logout()}
+                            className="relative text-white hover:underline"
+                        >
+                            Log Out
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -143,14 +141,12 @@ export default function Navbar({ isLoggedIn }) {
                         </Link>
                     </li>
                     <li>
-                        <form action={async () => await logout()}>
-                            <button
-                                type="submit"
-                                className="relative text-white hover:underline"
-                            >
-                                Log out
-                            </button>
-                        </form>
+                        <button
+                            onClick={() => logout()}
+                            className="relative text-white hover:underline"
+                        >
+                            Log Out
+                        </button>
                     </li>
                 </ul>
 

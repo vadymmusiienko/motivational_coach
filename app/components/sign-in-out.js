@@ -20,7 +20,12 @@ export function SignOut() {
                 await signOut();
             }}
         >
-            <button type="submit">Sign Out</button>
+            <button
+                type="submit"
+                className="relative text-white hover:underline"
+            >
+                Log Out
+            </button>
         </form>
     );
 }
