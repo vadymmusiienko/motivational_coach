@@ -79,12 +79,14 @@ export default function Navbar({ isLoggedIn }) {
                         </Link>
                     </li>
                     <li>
-                        <Link
-                            href="/login"
-                            className="text-white hover:underline"
-                        >
-                            Log out
-                        </Link>
+                        <form action={async () => await logout()}>
+                            <button
+                                type="submit"
+                                className="relative text-white hover:underline"
+                            >
+                                Log out
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -141,23 +143,14 @@ export default function Navbar({ isLoggedIn }) {
                         </Link>
                     </li>
                     <li>
-                        {/* <form
-                            action={async () => {
-                                "use server";
-                                await signOut();
-                            }}
-                        >
-                            <button type="submit"> Log out</button>
-                        </form> */}
-                        <button type="button" onClick={logout}>
-                            Log out
-                        </button>
-                        <Link
-                            href="/login"
-                            className="relative text-white hover:underline"
-                        >
-                            Log out
-                        </Link>
+                        <form action={async () => await logout()}>
+                            <button
+                                type="submit"
+                                className="relative text-white hover:underline"
+                            >
+                                Log out
+                            </button>
+                        </form>
                     </li>
                 </ul>
 
