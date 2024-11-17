@@ -2,20 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Roboto font */
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-
-/* TODO: make sure I need the font */
 :root {
     background-color: rgba(0, 0, 0, 0.95);
     color: white;
 }
 
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: "Roboto", sans-serif;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Customize the scroll bar */

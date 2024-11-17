@@ -69,3 +69,7 @@ Step 29. Add a default coach when registering
 Step 30. Get user's coachVoiceId from the database in the api call
 
 Step 31. Make it possible to change the voice through the frontend.
+
+Step 32. Add a navbar
+
+Step 33. Fix the register and login pages

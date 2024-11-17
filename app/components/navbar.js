@@ -5,7 +5,6 @@ import Image from "next/image";
 
 // TODO: implement the isLoggedIn logic
 export default function Navbar({ isLoggedIn }) {
-    console.log("is logged in: ", isLoggedIn);
     // States for responsiveness
     const [isSidebarVisible, setSidebarVisible] = useState(false);
 

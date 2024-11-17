@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import Input from "../components/input";
 import { Label } from "../components/label";
 import { login } from "../actions";
+import Link from "next/link";
 
 export default async function Login({ searchParams }) {
     // The error message if any
@@ -14,14 +15,13 @@ export default async function Login({ searchParams }) {
     if (session?.user) redirect("/dashboard");
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center h-full">
             <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
                 <h2 className="font-bold text-xl text-neutral-200">
-                    Welcome to my website
+                    Welcome Back to Motivational Coach!
                 </h2>
                 <p className="text-sm max-w-sm mt-2 text-neutral-300">
-                    Login to aceternity if you can because we don&apos;t have a
-                    login flow yet
+                    Log in to access your personalized tools and progress.
                 </p>
 
                 <form className="my-8" action={login}>
@@ -55,6 +55,15 @@ export default async function Login({ searchParams }) {
                         Sign in &rarr;
                         <BottomGradient />
                     </button>
+                    <p className="mt-7 text-sm text-gray-400">
+                        Don&apos;t have an accout yet? <br></br>
+                        <Link
+                            href="/userAuth/register"
+                            className="text-blue-300 hover:underline font-medium transition duration-300"
+                        >
+                            Register here
+                        </Link>
+                    </p>
                     <p className="text-red-500 mt-4 text-center">
                         {errorMessage}
                     </p>

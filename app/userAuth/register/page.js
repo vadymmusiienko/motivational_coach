@@ -15,14 +15,13 @@ export default async function Register({ searchParams }) {
     if (session?.user) redirect("/dashboard");
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center h-full">
             <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
                 <h2 className="font-bold text-xl text-neutral-200">
-                    Welcome to my website
+                    Welcome to Motivational Coach
                 </h2>
                 <p className="text-sm max-w-sm mt-2 text-neutral-300">
-                    Login to aceternity if you can because we don&apos;t have a
-                    login flow yet
+                    Ready to take on the world? We&apos;ll cheer you on!
                 </p>
 
                 <form className="my-8" action={register}>
@@ -90,13 +89,14 @@ export default async function Register({ searchParams }) {
                         <BottomGradient />
                     </button>
 
-                    <button
-                        className="mt-8 bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 block bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-                        type="button"
+                    <Link
+                        href="/userAuth/signin"
+                        className="mt-8 bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] text-center flex items-center justify-center"
                     >
-                        <Link href="/userAuth/signin">Login</Link>
+                        Login
                         <BottomGradient />
-                    </button>
+                    </Link>
+
                     <p className="text-red-500 mt-4 text-center">
                         {errorMessage}
                     </p>
