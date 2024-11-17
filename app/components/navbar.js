@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { logout } from "../userAuth/actions";
 
 // TODO: implement the isLoggedIn logic
 export default function Navbar({ isLoggedIn }) {
@@ -96,7 +97,10 @@ export default function Navbar({ isLoggedIn }) {
             >
                 {/* Logo */}
                 <div>
-                    <Link href="/">
+                    <Link
+                        href="/"
+                        className="flex justify-center items-center space-x-6"
+                    >
                         <Image
                             src={"/logo.png"}
                             alt="Logo"
@@ -104,6 +108,9 @@ export default function Navbar({ isLoggedIn }) {
                             height={60}
                             className="h-10 w-auto"
                         />
+                        <h1 className="text-xl font-semibold">
+                            Motivational coach
+                        </h1>
                     </Link>
                 </div>
 
@@ -134,6 +141,17 @@ export default function Navbar({ isLoggedIn }) {
                         </Link>
                     </li>
                     <li>
+                        {/* <form
+                            action={async () => {
+                                "use server";
+                                await signOut();
+                            }}
+                        >
+                            <button type="submit"> Log out</button>
+                        </form> */}
+                        <button type="button" onClick={logout}>
+                            Log out
+                        </button>
                         <Link
                             href="/login"
                             className="relative text-white hover:underline"

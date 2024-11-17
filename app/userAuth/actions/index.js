@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/lib/auth";
+import { signIn, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { signInSchema } from "@/lib/zod";
 import { hash } from "bcryptjs";
@@ -103,4 +103,10 @@ export async function register(formData) {
 
     // Redirect back to dashboard
     redirect("/dashboard");
+}
+
+// Handle signing out
+export async function logout() {
+    await signOut({ redirect: false });
+    redirect("/");
 }
