@@ -158,30 +158,9 @@ export const SkeletonThree = () => {
         </motion.div>
     );
 };
-export const SkeletonFour = ({ currentlySelectedCoach }) => {
-    // const first = {
-    //     initial: {
-    //         x: 20,
-    //         rotate: -5,
-    //     },
-    //     hover: {
-    //         x: 0,
-    //         rotate: 0,
-    //     },
-    // };
-    // const second = {
-    //     initial: {
-    //         x: -20,
-    //         rotate: 5,
-    //     },
-    //     hover: {
-    //         x: 0,
-    //         rotate: 0,
-    //     },
-    // };
-
+export const SkeletonFour = () => {
     // States for highlighting the selected coach
-    const [selectedCoach, selectCoach] = useState(currentlySelectedCoach);
+    const [selectedCoach, selectCoach] = useState(null);
     const [isLoading, setLoading] = useState(false);
 
     // Change the selected coach
