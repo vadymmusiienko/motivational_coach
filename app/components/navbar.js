@@ -3,7 +3,9 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Navbar() {
+// TODO: implement the isLoggedIn logic
+export default function Navbar({ isLoggedIn }) {
+    console.log("is logged in: ", isLoggedIn);
     // States for responsiveness
     const [isSidebarVisible, setSidebarVisible] = useState(false);
 

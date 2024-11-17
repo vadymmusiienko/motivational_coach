@@ -17,11 +17,8 @@ import {
 
 // Function to get the currently selected coach and pass it to the skeleton
 async function getVoice() {
-    try {
-        const coach = await getCoach();
-    } catch (e) {
-        return null;
-    }
+    const coach = await getCoach();
+    if (!coach) return null;
     return coach.voiceId;
 }
 
