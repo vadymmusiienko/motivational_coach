@@ -4,40 +4,30 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-
 // Auth tables 
 model User {
-  id            String          @id @default(cuid())
-  firstName     String?
-  lastName      String?
-  email         String          @unique
-  // sessions      Session[]
-  password      String          //Hashed password
- 
+  id        String  @id @default(cuid())
+  firstName String?
+  lastName  String?
+  email     String  @unique
+  password  String //Hashed password
+
+  coachVoiceId String? // Foreign key to Coach
+  coach        Coach?  @relation(fields: [coachVoiceId], references: [voiceId])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
- 
-// model Session {
-//   sessionToken String   @unique
-//   userId       String
-//   expires      DateTime
-//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
- 
-// model VerificationToken {
-//   identifier String
-//   token      String
-//   expires    DateTime
- 
-//   @@id([identifier, token])
-// }
+
+// Coach table
+model Coach {
+  voiceId String @id // Use voiceId as a primary key
+  name    String
+
+  users User[] @relation
+}

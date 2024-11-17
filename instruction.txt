@@ -53,3 +53,19 @@ Step 21. Add a login and register page as well as a file with functions for regi
 Step 22. Add a main grid for dashboard
 
 Step 23. Add coach images to the public folder
+
+Step 24. Add lmnt and chatgpt functionality (lmnt.js in lib)
+
+Step 25. Install openai api
+
+Step 26. Generate random quote when "Click me!" is clicked
+
+Step 27. Add a coach table to the database and connect it with a user table
+
+Step 28. Create default coaches in a seed file
+
+Step 29. Add a default coach when registering
+
+Step 30. Get user's coachVoiceId from the database in the api call
+
+Step 31. Make it possible to change the voice through the frontend.

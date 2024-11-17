@@ -1,4 +1,5 @@
 // Skeletons
+import { getCoach } from "@/lib/lmnt";
 import {
     SkeletonOne,
     SkeletonTwo,
@@ -13,6 +14,13 @@ import {
     IconSignature,
     IconTableColumn,
 } from "@tabler/icons-react";
+
+// Function to get the currently selected coach and pass it to the skeleton
+async function getVoice() {
+    const { _, voiceId } = await getCoach();
+    return voiceId;
+}
+const voice = await getVoice();
 
 export const items = [
     {
@@ -51,7 +59,7 @@ export const items = [
                 Find the Inspiration to Reach Your Goals
             </span>
         ),
-        header: <SkeletonFour />,
+        header: <SkeletonFour currentlySelectedCoach={voice} />,
         className: "md:col-span-2",
         icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
     },

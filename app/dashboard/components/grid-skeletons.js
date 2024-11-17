@@ -4,6 +4,22 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 // For random width
 import { useEffect, useState } from "react";
+// Import the lmnt and ChatGPT functionalities
+import { getCoach, randomQuoteAudio, setCoach } from "@/lib/lmnt";
+
+// Constants with coach voice ids
+const elonMusk = process.env.NEXT_PUBLIC_VOICE_MUSK;
+const davidGoggins = process.env.NEXT_PUBLIC_VOICE_GOGGINS;
+const tonyRobbins = process.env.NEXT_PUBLIC_VOICE_ROBBINS; //TODO: synthesize the voice
+
+// Function to play a random motivational quote
+async function playAudio() {
+    // Retrieve and play the audio
+    const audioBlob = await randomQuoteAudio();
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    audio.play();
+}
 
 export const SkeletonOne = () => {
     const variants = {
@@ -122,6 +138,7 @@ export const SkeletonThree = () => {
     };
     return (
         <motion.div
+            onClick={playAudio} //TODO
             initial="initial"
             animate="animate"
             variants={variants}
@@ -141,7 +158,7 @@ export const SkeletonThree = () => {
         </motion.div>
     );
 };
-export const SkeletonFour = () => {
+export const SkeletonFour = ({ currentlySelectedCoach }) => {
     const first = {
         initial: {
             x: 20,
@@ -162,6 +179,20 @@ export const SkeletonFour = () => {
             rotate: 0,
         },
     };
+
+    // States for highlighting the selected coach
+    const [selectedCoach, selectCoach] = useState(currentlySelectedCoach);
+
+    // Change the selected coach
+    async function handleSelectCoach(voiceId) {
+        //TODO: add loading state
+        // Update the database (new coachVoiceId)
+        await setCoach(voiceId);
+
+        // Update the state of the selected coach
+        selectCoach(voiceId);
+    }
+
     return (
         <motion.div
             initial="initial"
@@ -169,9 +200,13 @@ export const SkeletonFour = () => {
             whileHover="hover"
             className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2"
         >
+            {/* Elon Musk */}
             <motion.div
                 variants={first}
-                className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
+                onClick={() => handleSelectCoach(elonMusk)}
+                className={`h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                    selectedCoach === elonMusk ? "ring-4 ring-blue-500" : ""
+                }`}
             >
                 <Image
                     src="/musk.png"
@@ -187,7 +222,13 @@ export const SkeletonFour = () => {
                     Visionary
                 </p>
             </motion.div>
-            <motion.div className="h-full relative z-20 w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
+            {/* David Goggins */}
+            <motion.div
+                onClick={() => handleSelectCoach(davidGoggins)}
+                className={`h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                    selectedCoach === davidGoggins ? "ring-4 ring-blue-500" : ""
+                }`}
+            >
                 <Image
                     src="/goggins.png"
                     alt="avatar"
@@ -202,9 +243,13 @@ export const SkeletonFour = () => {
                     Unbreakable
                 </p>
             </motion.div>
+            {/* Tony Robbins */}
             <motion.div
                 variants={second}
-                className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
+                onClick={() => handleSelectCoach(tonyRobbins)}
+                className={`h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                    selectedCoach === tonyRobbins ? "ring-4 ring-blue-500" : ""
+                }`}
             >
                 <Image
                     src="/robbins.png"

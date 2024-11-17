@@ -8,7 +8,6 @@ export default async function Dashboard() {
 
     if (!session) {
         await signIn(); // This is how you protect a route
-        console.log("Not logged");
     }
 
     // Display the Dashboard

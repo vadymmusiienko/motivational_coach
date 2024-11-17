@@ -1,7 +1,7 @@
 // seed.js
 import { PrismaClient } from "@prisma/client";
 //import { hash } from "bcryptjs";
-import bcryptjs from 'bcryptjs';
+import bcryptjs from "bcryptjs";
 
 const hash = bcryptjs.hash;
 
@@ -11,41 +11,46 @@ async function main() {
     // Create a hashed password
     const password = await hash("test", 12);
 
-    // Seed User data
-    const user = await prisma.user.create({
-        data: {
-            firstName: "John",
-            lastName: "Doe",
-            email: "johndoe@example.com",
-            password: password, // Remember to hash this in production
+    // Create David Goggins as a coach
+    const davidGoggins = await prisma.coach.upsert({
+        where: { voiceId: process.env.VOICE_GOGGINS },
+        update: {},
+        create: {
+            voiceId: process.env.VOICE_GOGGINS,
+            name: "David Goggins",
         },
     });
 
-    console.log(`Created user: ${user.email}`);
+    console.log(`Created default coach: ${davidGoggins.name}`);
 
-    // Seed Session data
-    // const session = await prisma.session.create({
-    //     data: {
-    //         sessionToken: "random_session_token",
-    //         userId: user.id,
-    //         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-    //     },
-    // });
+    // Create Elon Musk as a coach
+    const elonMusk = await prisma.coach.upsert({
+        where: { voiceId: process.env.VOICE_MUSK },
+        update: {},
+        create: {
+            voiceId: process.env.VOICE_MUSK,
+            name: "Elon Musk",
+        },
+    });
 
-    // console.log(`Created session for user: ${user.email}`);
+    console.log(`Created coach ${elonMusk.name}`);
 
-    // // Seed VerificationToken data
-    // const verificationToken = await prisma.verificationToken.create({
-    //     data: {
-    //         identifier: "johndoe@example.com",
-    //         token: "random_verification_token",
-    //         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day from now
-    //     },
-    // });
+    //TODO: add Tony Robbins as a coach
 
-    // console.log(
-    //     `Created verification token for user: ${verificationToken.identifier}`
-    // );
+    // Create admin user
+    const admin = await prisma.user.upsert({
+        where: { email: "admin@gmail.com" },
+        update: {},
+        create: {
+            firstName: "ADMIN",
+            lastName: "ADMIN",
+            email: "admin@gmail.com",
+            password: password, // Hashed password
+            coachVoiceId: process.env.VOICE_GOGGINS,
+        },
+    });
+
+    console.log(`Created user: ${admin.email}`);
 }
 
 main()
