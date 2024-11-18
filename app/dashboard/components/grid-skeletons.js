@@ -1,10 +1,7 @@
 "use client";
-// Has to be a client component because uses motion and whileHover
 import { motion } from "framer-motion";
 import Image from "next/image";
-// For random width
 import { useEffect, useState } from "react";
-// Import the lmnt and ChatGPT functionalities
 import { getMotivated, randomQuoteAudio, setCoach } from "@/lib/lmnt";
 import { useCoach } from "@/context/CoachContext";
 import { useLoading } from "@/context/Loading";
@@ -24,21 +21,28 @@ export const SkeletonOne = () => {
         // If loading - return
         if (isLoading) return;
 
-        // Get the topic
-        const topic = formData.get("topic");
-        if (!topic) return;
-
         // Start loading
         setIsLoading(true);
+
+        // Get the topic
+        const topic = formData.get("topic");
+        if (!topic) {
+            setIsLoading(false);
+            return;
+        }
 
         // Create a custom quote
         const audioBlob = await getMotivated(topic, selectedCoach);
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
-        audio.play();
 
-        // Stop loading
-        setTimeout(() => setIsLoading(false), 10000);
+        // Set isLoading to false when audio ends
+        audio.addEventListener("ended", () => {
+            setIsLoading(false);
+        });
+
+        // Play the audio
+        audio.play();
     }
 
     return (
@@ -57,6 +61,7 @@ export const SkeletonOne = () => {
                         isLoading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     name="topic"
+                    required
                     disabled={isLoading} // Disables the textarea
                 />
                 <button
@@ -141,8 +146,14 @@ export const SkeletonThree = () => {
         const audioBlob = await randomQuoteAudio(selectedCoach);
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
+
+        // Set isLoading to false when audio ends
+        audio.addEventListener("ended", () => {
+            setIsLoading(false);
+        });
+
+        // Play the audio
         audio.play();
-        setTimeout(() => setIsLoading(false), 10000); // Make 10 sec delay for next call
     }
 
     // Get current coach
