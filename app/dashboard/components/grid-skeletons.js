@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 // Import the lmnt and ChatGPT functionalities
 import { getMotivated, randomQuoteAudio, setCoach } from "@/lib/lmnt";
 import { useCoach } from "@/context/CoachContext";
+import { useLoading } from "@/context/Loading";
 
 // Constants with coach voice ids
 const elonMusk = process.env.NEXT_PUBLIC_VOICE_MUSK;
@@ -16,25 +17,35 @@ const tonyRobbins = process.env.NEXT_PUBLIC_VOICE_ROBBINS;
 export const SkeletonOne = () => {
     // Get the coach
     const { selectedCoach } = useCoach();
+    const { isLoading, setIsLoading } = useLoading();
 
     // Function that creates and says the custom quote
     async function handleSubmit(formData) {
+        // If loading - return
+        if (isLoading) return;
+
         // Get the topic
         const topic = formData.get("topic");
         if (!topic) return;
+
+        // Start loading
+        setIsLoading(true);
 
         // Create a custom quote
         const audioBlob = await getMotivated(topic, selectedCoach);
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
         audio.play();
+
+        // Stop loading
+        setTimeout(() => setIsLoading(false), 10000);
     }
 
     return (
         <motion.div
             initial="initial"
             whileHover="animate"
-            className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2"
+            className="flex flex-1 w-full h-full min-h-[6rem] bg-dot-white/[0.2] flex-col space-y-2"
         >
             <form
                 action={handleSubmit}
@@ -42,12 +53,18 @@ export const SkeletonOne = () => {
             >
                 <textarea
                     placeholder="What do you want to be motivated about?"
-                    className="w-full h-full p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none"
+                    className={`w-full h-full p-4 rounded-lg bg-black border border-neutral-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none ${
+                        isLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                     name="topic"
+                    disabled={isLoading} // Disables the textarea
                 />
                 <button
                     type="submit"
-                    className="w-full py-2 px-4 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600 transition-colors"
+                    className={`w-full py-2 px-4 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600 transition-colors ${
+                        isLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={isLoading} // Disables the button
                 >
                     Get motivated!
                 </button>
@@ -119,18 +136,18 @@ export const SkeletonThree = () => {
     async function playAudio(selectedCoach) {
         if (isLoading) return;
 
-        setLoading(true);
+        setIsLoading(true);
         // Retrieve and play the audio
         const audioBlob = await randomQuoteAudio(selectedCoach);
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
         audio.play();
-        setTimeout(() => setLoading(false), 5000); // Make 5 sec delay for next call
+        setTimeout(() => setIsLoading(false), 10000); // Make 10 sec delay for next call
     }
 
     // Get current coach
     const { selectedCoach } = useCoach();
-    const [isLoading, setLoading] = useState(false);
+    const { isLoading, setIsLoading } = useLoading();
 
     return (
         <motion.div
@@ -143,7 +160,9 @@ export const SkeletonThree = () => {
                 repeat: Infinity,
                 repeatType: "reverse",
             }}
-            className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] rounded-lg bg-dot-black/[0.2] flex-col space-y-2"
+            className={`flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] rounded-lg bg-dot-black/[0.2] flex-col space-y-2 ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             style={{
                 background:
                     "linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)",
@@ -157,11 +176,15 @@ export const SkeletonThree = () => {
 export const SkeletonFour = () => {
     // States for highlighting the selected coach
     const { selectedCoach, selectCoach } = useCoach();
+    const { isLoading } = useLoading();
 
     // Change the selected coach
     async function handleSelectCoach(voiceId) {
         // Check if already selected
         if (selectedCoach === voiceId) return;
+
+        // Check if loading
+        if (isLoading) return;
 
         // Update the state of the selected coach
         selectCoach(voiceId);
@@ -172,11 +195,12 @@ export const SkeletonFour = () => {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2"
+            className={`flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2 ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
         >
             {/* Elon Musk */}
             <motion.div
-                // variants={first}
                 onClick={() => handleSelectCoach(elonMusk)}
                 className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
                     selectedCoach === elonMusk ? "shadow-glowbottom" : ""
@@ -219,7 +243,6 @@ export const SkeletonFour = () => {
             </motion.div>
             {/* Tony Robbins */}
             <motion.div
-                // variants={second}
                 onClick={() => handleSelectCoach(tonyRobbins)}
                 className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
                     selectedCoach === tonyRobbins ? "shadow-glowbottom" : ""

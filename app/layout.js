@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import { auth } from "@/lib/auth";
 import { CoachProvider } from "@/context/CoachContext";
+import { LoadingProvider } from "@/context/Loading";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -32,7 +33,9 @@ export default async function RootLayout({ children }) {
             >
                 <Navbar isLoggedIn={isLoggedIn} />
                 <div className="pt-28"></div>
-                <CoachProvider>{children}</CoachProvider>
+                <LoadingProvider>
+                    <CoachProvider>{children}</CoachProvider>
+                </LoadingProvider>
             </body>
         </html>
     );
