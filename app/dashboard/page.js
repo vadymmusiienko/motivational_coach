@@ -1,13 +1,14 @@
-import { auth, signIn } from "@/lib/auth";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 // Import the dashboard component
 import MainGrid from "./components/main-grid";
 
 export default async function Dashboard() {
-    // Protect the route
+    // Redirect to the home page if not signed in
     const session = await auth();
 
-    if (!session) {
-        await signIn(); // This is how you protect a route
+    if (!session?.user) {
+        redirect("/");
     }
 
     // Display the Dashboard

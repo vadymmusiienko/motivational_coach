@@ -5,47 +5,30 @@ import Image from "next/image";
 // For random width
 import { useEffect, useState } from "react";
 // Import the lmnt and ChatGPT functionalities
-import { randomQuoteAudio, setCoach } from "@/lib/lmnt";
+import { getMotivated, randomQuoteAudio, setCoach } from "@/lib/lmnt";
+import { useCoach } from "@/context/CoachContext";
 
 // Constants with coach voice ids
 const elonMusk = process.env.NEXT_PUBLIC_VOICE_MUSK;
 const davidGoggins = process.env.NEXT_PUBLIC_VOICE_GOGGINS;
 const tonyRobbins = process.env.NEXT_PUBLIC_VOICE_ROBBINS;
 
-// Function to play a random motivational quote
-async function playAudio() {
-    // Retrieve and play the audio
-    const audioBlob = await randomQuoteAudio();
-    const audioUrl = URL.createObjectURL(audioBlob);
-    const audio = new Audio(audioUrl);
-    audio.play();
-}
-
 export const SkeletonOne = () => {
-    const variants = {
-        initial: {
-            x: 0,
-        },
-        animate: {
-            x: 10,
-            rotate: 5,
-            transition: {
-                duration: 0.2,
-            },
-        },
-    };
-    const variantsSecond = {
-        initial: {
-            x: 0,
-        },
-        animate: {
-            x: -10,
-            rotate: -5,
-            transition: {
-                duration: 0.2,
-            },
-        },
-    };
+    // Get the coach
+    const { selectedCoach } = useCoach();
+
+    // Function that creates and says the custom quote
+    async function handleSubmit(formData) {
+        // Get the topic
+        const topic = formData.get("topic");
+        if (!topic) return;
+
+        // Create a custom quote
+        const audioBlob = await getMotivated(topic, selectedCoach);
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+    }
 
     return (
         <motion.div
@@ -53,27 +36,22 @@ export const SkeletonOne = () => {
             whileHover="animate"
             className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2"
         >
-            <motion.div
-                variants={variants}
-                className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2  items-center space-x-2 bg-white dark:bg-black"
+            <form
+                action={handleSubmit}
+                className="flex flex-col space-y-4 h-full"
             >
-                <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-                <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
-            </motion.div>
-            <motion.div
-                variants={variantsSecond}
-                className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
-            >
-                <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
-                <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-            </motion.div>
-            <motion.div
-                variants={variants}
-                className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
-            >
-                <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-                <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
-            </motion.div>
+                <textarea
+                    placeholder="What do you want to be motivated about?"
+                    className="w-full h-full p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none"
+                    name="topic"
+                />
+                <button
+                    type="submit"
+                    className="w-full py-2 px-4 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600 transition-colors"
+                >
+                    Get motivated!
+                </button>
+            </form>
         </motion.div>
     );
 };
@@ -136,9 +114,27 @@ export const SkeletonThree = () => {
             backgroundPosition: ["0, 50%", "100% 50%", "0 50%"],
         },
     };
+
+    // Function to play a random motivational quote
+    async function playAudio(selectedCoach) {
+        if (isLoading) return;
+
+        setLoading(true);
+        // Retrieve and play the audio
+        const audioBlob = await randomQuoteAudio(selectedCoach);
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+        setTimeout(() => setLoading(false), 5000); // Make 5 sec delay for next call
+    }
+
+    // Get current coach
+    const { selectedCoach } = useCoach();
+    const [isLoading, setLoading] = useState(false);
+
     return (
         <motion.div
-            onClick={playAudio} //TODO
+            onClick={() => playAudio(selectedCoach)}
             initial="initial"
             animate="animate"
             variants={variants}
@@ -160,28 +156,15 @@ export const SkeletonThree = () => {
 };
 export const SkeletonFour = () => {
     // States for highlighting the selected coach
-    const [selectedCoach, selectCoach] = useState(null);
-    const [isLoading, setLoading] = useState(false);
+    const { selectedCoach, selectCoach } = useCoach();
 
     // Change the selected coach
     async function handleSelectCoach(voiceId) {
-        // Check if already loading
-        if (isLoading) return;
-
         // Check if already selected
         if (selectedCoach === voiceId) return;
 
         // Update the state of the selected coach
         selectCoach(voiceId);
-
-        // Start loadging
-        setLoading(true);
-
-        // Update the database (new coachVoiceId)
-        await setCoach(voiceId);
-
-        // Stop loading
-        setLoading(false);
     }
 
     return (
@@ -212,11 +195,6 @@ export const SkeletonFour = () => {
                 <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Visionary
                 </p>
-                {isLoading && selectedCoach === elonMusk && (
-                    <div className="absolute top-44 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-white"></div>
-                    </div>
-                )}
             </motion.div>
             {/* David Goggins */}
             <motion.div
@@ -238,11 +216,6 @@ export const SkeletonFour = () => {
                 <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Unbreakable
                 </p>
-                {isLoading && selectedCoach === davidGoggins && (
-                    <div className="absolute top-44 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-white"></div>
-                    </div>
-                )}
             </motion.div>
             {/* Tony Robbins */}
             <motion.div
@@ -265,11 +238,6 @@ export const SkeletonFour = () => {
                 <p className="border border-orange-500 bg-orange-100 dark:bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Empowering
                 </p>
-                {isLoading && selectedCoach === tonyRobbins && (
-                    <div className="absolute top-44 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-white"></div>
-                    </div>
-                )}
             </motion.div>
         </motion.div>
     );

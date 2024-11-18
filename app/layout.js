@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/navbar";
 import { auth } from "@/lib/auth";
+import { CoachProvider } from "@/context/CoachContext";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -30,8 +31,8 @@ export default async function RootLayout({ children }) {
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 <Navbar isLoggedIn={isLoggedIn} />
-                <div className="pt-32"></div>
-                {children}
+                <div className="pt-28"></div>
+                <CoachProvider>{children}</CoachProvider>
             </body>
         </html>
     );
