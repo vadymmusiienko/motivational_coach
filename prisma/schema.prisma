@@ -22,12 +22,6 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-// Coach table
-model Coach {
-  voiceId String @id // Use voiceId as a primary key
-  name    String
-}
-
 // Quote table
 model Quote {
   id      String @id @default(cuid())

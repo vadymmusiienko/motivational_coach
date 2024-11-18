@@ -1,4 +1,5 @@
 // Skeletons
+import Link from "next/link";
 import {
     SkeletonOne,
     SkeletonTwo,
@@ -27,13 +28,19 @@ export const items = [
         //icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
     },
     {
-        title: "Reflection Archive",
+        title: <Link href="/dashboard/quotes">"My Quotes"</Link>,
         description: (
-            <span className="text-sm">
-                Review Your Journey and Track Your Growth
-            </span>
+            <Link href="/dashboard/quotes">
+                <span className="text-sm">
+                    Browse Your Previously Generated Quotes
+                </span>
+            </Link>
         ),
-        header: <SkeletonTwo />,
+        header: (
+            <Link href="/dashboard/quotes">
+                <SkeletonTwo />
+            </Link>
+        ),
         className: "md:col-span-1",
         icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
     },
