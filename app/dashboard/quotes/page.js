@@ -6,7 +6,9 @@ export default async function Quotes() {
     const session = await auth();
 
     if (!session?.user) {
-        const errorMessage = encodeURIComponent('Log in to see "My quotes"');
+        const errorMessage = encodeURIComponent(
+            "Log in to see the previous quotes"
+        );
         redirect(`/userAuth/signin?error=${errorMessage}`);
     }
 }
