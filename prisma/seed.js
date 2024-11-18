@@ -56,7 +56,6 @@ async function main() {
             lastName: "ADMIN",
             email: "admin@gmail.com",
             password: password, // Hashed password
-            coachVoiceId: process.env.NEXT_PUBLIC_VOICE_GOGGINS,
         },
     });
 

@@ -17,9 +17,7 @@ model User {
   email     String  @unique
   password  String //Hashed password
 
-  coachVoiceId String? // Foreign key to Coach
-  coach        Coach?  @relation(fields: [coachVoiceId], references: [voiceId])
-
+  quotes    Quote[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -28,6 +26,16 @@ model User {
 model Coach {
   voiceId String @id // Use voiceId as a primary key
   name    String
+}
 
-  users User[] @relation
+// Quote table
+model Quote {
+  id      String @id @default(cuid())
+  content String
+  topic   String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String // Foreign key to User
+
+  createdAt DateTime @default(now())
 }
