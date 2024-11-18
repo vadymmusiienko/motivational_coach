@@ -28,7 +28,7 @@ export const items = [
         //icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
     },
     {
-        title: <Link href="/dashboard/quotes">"My Quotes"</Link>,
+        title: <Link href="/dashboard/quotes">My Quotes</Link>,
         description: (
             <Link href="/dashboard/quotes">
                 <span className="text-sm">
