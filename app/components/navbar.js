@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { logout } from "../userAuth/actions";
 
-// TODO: implement the isLoggedIn logic
 export default function Navbar({ isLoggedIn }) {
     // States for responsiveness
     const [isSidebarVisible, setSidebarVisible] = useState(false);
