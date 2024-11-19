@@ -32,7 +32,7 @@ export const SkeletonOne = () => {
         }
 
         // Create a custom quote
-        const audioBlob = await getMotivated(topic, selectedCoach);
+        const audioBlob = await getMotivated(topic.trim(), selectedCoach);
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
 
