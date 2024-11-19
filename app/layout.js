@@ -4,6 +4,7 @@ import Navbar from "./components/navbar";
 import { auth } from "@/lib/auth";
 import { CoachProvider } from "@/context/CoachContext";
 import { LoadingProvider } from "@/context/Loading";
+import Footer from "./components/footer";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }) {
                 <LoadingProvider>
                     <CoachProvider>{children}</CoachProvider>
                 </LoadingProvider>
+                <Footer />
             </body>
         </html>
     );
