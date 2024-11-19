@@ -1,5 +1,6 @@
 import { getUserId } from "@/lib/lmnt";
 import PlayableQuotes from "./playablequote";
+import prisma from "@/lib/prisma";
 
 export default async function QuoteGrid() {
     // Get user's id
