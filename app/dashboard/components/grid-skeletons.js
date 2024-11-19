@@ -112,7 +112,7 @@ export const SkeletonTwo = () => {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2"
+            className="flex flex-1 w-full h-full min-h-[6rem] bg-dot-white/[0.2] flex-col space-y-2"
         >
             {maxWidths.map((width, i) => (
                 <motion.div
@@ -121,7 +121,7 @@ export const SkeletonTwo = () => {
                     style={{
                         maxWidth: width,
                     }}
-                    className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2  items-center space-x-2 bg-neutral-100 dark:bg-black w-full h-4"
+                    className="flex flex-row rounded-full border border-white/[0.2] p-2  items-center space-x-2 bg-black w-full h-4"
                 ></motion.div>
             ))}
         </motion.div>
@@ -171,7 +171,7 @@ export const SkeletonThree = () => {
                 repeat: Infinity,
                 repeatType: "reverse",
             }}
-            className={`flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] rounded-lg bg-dot-black/[0.2] flex-col space-y-2 ${
+            className={`flex flex-1 w-full h-full min-h-[6rem] bg-dot-white/[0.2] rounded-lg flex-col space-y-2 ${
                 isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             style={{
@@ -206,14 +206,14 @@ export const SkeletonFour = () => {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            className={`flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2 ${
+            className={`flex flex-1 w-full h-full min-h-[6rem] bg-dot-white/[0.2] flex-row space-x-2 ${
                 isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
         >
             {/* Elon Musk */}
             <motion.div
                 onClick={() => handleSelectCoach(elonMusk)}
-                className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                className={`relative h-full w-1/3 rounded-2xl p-4 bg-black border-white/[0.1] border flex flex-col items-center justify-center cursor-pointer ${
                     selectedCoach === elonMusk ? "shadow-glowbottom" : ""
                 }`}
             >
@@ -227,14 +227,14 @@ export const SkeletonFour = () => {
                 <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
                     Elon Musk
                 </p>
-                <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
+                <p className="border border-red-500 bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Visionary
                 </p>
             </motion.div>
             {/* David Goggins */}
             <motion.div
                 onClick={() => handleSelectCoach(davidGoggins)}
-                className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                className={`relative h-full w-1/3 rounded-2xl p-4 bg-black border-white/[0.1] border flex flex-col items-center justify-center cursor-pointer ${
                     selectedCoach === davidGoggins ? "shadow-glowbottom" : ""
                 }`}
             >
@@ -248,14 +248,14 @@ export const SkeletonFour = () => {
                 <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
                     David Goggins
                 </p>
-                <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
+                <p className="border border-green-500 bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Unbreakable
                 </p>
             </motion.div>
             {/* Tony Robbins */}
             <motion.div
                 onClick={() => handleSelectCoach(tonyRobbins)}
-                className={`relative h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center cursor-pointer ${
+                className={`relative h-full w-1/3 rounded-2xl p-4 bg-black border-white/[0.1] border flex flex-col items-center justify-center cursor-pointer ${
                     selectedCoach === tonyRobbins ? "shadow-glowbottom" : ""
                 }`}
             >
@@ -269,7 +269,7 @@ export const SkeletonFour = () => {
                 <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
                     Tony Robbins
                 </p>
-                <p className="border border-orange-500 bg-orange-100 dark:bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
+                <p className="border border-orange-500 bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
                     Empowering
                 </p>
             </motion.div>

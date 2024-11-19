@@ -17,15 +17,8 @@ import {
 
 export const items = [
     {
-        // title: "Log a New Reflection",
-        // description: (
-        //     <span className="text-sm">
-        //         Capture Your Thoughts and Progress for Today
-        //     </span>
-        // ),
         header: <SkeletonOne />,
         className: "md:col-span-1 m-0",
-        //icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
     },
     {
         title: <Link href="/dashboard/quotes">My Quotes</Link>,

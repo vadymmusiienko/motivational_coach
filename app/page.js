@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export default async function Home() {
+    // If the user logged in - redirect to dashboard
     const session = await auth();
     if (!!session?.user) {
         redirect("/dashboard");
