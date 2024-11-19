@@ -1,7 +1,6 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import Quote from "./components/quote"; // Assuming this component is used elsewhere
-import prisma from "@/lib/prisma";
+import QuoteGrid from "./components/quote"; // Assuming this component is used elsewhere
 
 export default async function Quotes() {
     // Redirect to the login page if not signed in
@@ -14,5 +13,5 @@ export default async function Quotes() {
         redirect(`/userAuth/signin?error=${errorMessage}`);
     }
 
-    return <Quote />;
+    return <QuoteGrid />;
 }

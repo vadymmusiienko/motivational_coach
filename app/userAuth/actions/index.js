@@ -48,6 +48,16 @@ export async function register(formData) {
         );
     }
 
+    // Make sure the passwords match
+    if (password != confirmPassowrd) {
+        // Display the error message
+        redirect(
+            `/userAuth/register?error=${encodeURIComponent(
+                "Passwords didn't match"
+            )}`
+        );
+    }
+
     // Make sure its valid password and email
     try {
         await signInSchema.parseAsync({ email, password });
@@ -75,10 +85,6 @@ export async function register(formData) {
         );
     }
 
-    if (existingUser) {
-        throw new Error("The user already exists!");
-    }
-
     // Hash the password
     const hashedPassword = await hash(password, 12);
 
@@ -89,7 +95,6 @@ export async function register(formData) {
             lastName,
             email,
             password: hashedPassword,
-            coachVoiceId: process.env.NEXT_PUBLIC_VOICE_GOGGINS, // Goggins voice by default
         },
     });
 

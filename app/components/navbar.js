@@ -65,18 +65,10 @@ export default function Navbar({ isLoggedIn }) {
                         </li>
                         <li>
                             <Link
-                                href="/archive"
+                                href="/dashboard/quotes"
                                 className="text-white hover:underline"
                             >
-                                Archive
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/about"
-                                className="text-white hover:underline"
-                            >
-                                About
+                                My quotes
                             </Link>
                         </li>
                         <li>
@@ -148,18 +140,10 @@ export default function Navbar({ isLoggedIn }) {
                         </li>
                         <li>
                             <Link
-                                href="/archive"
+                                href="/dashboard/quotes"
                                 className="relative text-white hover:underline"
                             >
-                                Archive
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/about"
-                                className="relative text-white hover:underline"
-                            >
-                                About
+                                My quotes
                             </Link>
                         </li>
                         <li>

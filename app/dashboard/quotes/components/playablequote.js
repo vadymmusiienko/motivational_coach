@@ -39,7 +39,13 @@ export default function PlayableQuotes({ quotes, hasQuotes }) {
     }
 
     return (
-        <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+        <div
+            className={`grid  ${
+                hasQuotes
+                    ? "md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto"
+                    : "grid-cols-1"
+            }`}
+        >
             {hasQuotes ? (
                 quotes.map((quote, i) => (
                     <div
@@ -49,19 +55,20 @@ export default function PlayableQuotes({ quotes, hasQuotes }) {
                             isLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                     >
-                        {/* Quote header */}
                         <div className="group-hover/bento:translate-x-2 transition duration-200">
-                            <div className="font-sans font-bold text-neutral-200 mb-2 mt-2">
+                            <div className="font-sans font-bold text-neutral-200 mb-2 mt-2 text-xl">
                                 {capitalizeFirstLetter(quote.topic)}
                             </div>
-                            <div className="font-sans font-normal text-xs text-neutral-300">
+                            <div className="font-sans font-normal text-base text-neutral-300">
                                 {quote.content}
                             </div>
                         </div>
                     </div>
                 ))
             ) : (
-                <p>There are no quotes here yet</p>
+                <h1 className="text-3xl font-extrabold text-gray-200 text-center">
+                    There are no quotes here yet
+                </h1>
             )}
         </div>
     );

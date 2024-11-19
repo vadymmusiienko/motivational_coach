@@ -1,7 +1,7 @@
 import { getUserId } from "@/lib/lmnt";
 import PlayableQuotes from "./playablequote";
 
-export default async function Quote() {
+export default async function QuoteGrid() {
     // Get user's id
     const userId = await getUserId();
 
@@ -12,6 +12,10 @@ export default async function Quote() {
             where: {
                 userId: userId,
             },
+            orderBy: {
+                createdAt: "desc",
+            },
+            take: 9,
         });
     }
 
