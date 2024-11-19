@@ -1,8 +1,10 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Quote from "./components/quote"; // Assuming this component is used elsewhere
+import prisma from "@/lib/prisma";
 
 export default async function Quotes() {
-    // Redirect to the home page if not signed in
+    // Redirect to the login page if not signed in
     const session = await auth();
 
     if (!session?.user) {
@@ -11,4 +13,6 @@ export default async function Quotes() {
         );
         redirect(`/userAuth/signin?error=${errorMessage}`);
     }
+
+    return <Quote />;
 }

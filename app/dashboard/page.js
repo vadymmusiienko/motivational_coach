@@ -14,6 +14,3 @@ export default async function Dashboard() {
     // Display the Dashboard
     return <MainGrid />;
 }
-//TODO:
-// Modify grid-skeletons to change animation
-// Modify items for description, titles and images
