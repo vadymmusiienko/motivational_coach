@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { CoachProvider } from "@/context/CoachContext";
 import { LoadingProvider } from "@/context/Loading";
 import Footer from "./components/footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -41,6 +42,7 @@ export default async function RootLayout({ children }) {
                     </CoachProvider>
                 </LoadingProvider>
                 <Footer />
+                <Analytics />
             </body>
         </html>
     );
